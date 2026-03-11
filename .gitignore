@@ -1,0 +1,26 @@
+# LeRobot source (installed separately)
+lerobot/
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+.eggs/
+
+# macOS
+.DS_Store
+
+# Data & models (too large for git)
+data/
+models/
+
+# Logs
+logs/
+
+# Environment
+.env
+*.env
+
+# Temporary files
+*.tmp
+*~
