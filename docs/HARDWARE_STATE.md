@@ -57,7 +57,9 @@
 - Leader: /dev/tty.usbmodem5AAF2625931
 
 ## Calibration Status
-(Fill in during Session 2.3)
+- Follower: CALIBRATED (id=follower, saved to ~/.cache/huggingface/lerobot/calibration/robots/so_follower/follower.json)
+- Leader: CALIBRATED (id=leader, saved to ~/.cache/huggingface/lerobot/calibration/teleoperators/so_leader/leader.json)
+- Teleoperation: VERIFIED — follower mirrors leader smoothly on all joints
 
 ## Known Issues
 (Log any hardware problems here)

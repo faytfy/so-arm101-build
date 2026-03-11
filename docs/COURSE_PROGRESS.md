@@ -1,7 +1,7 @@
 # Course Progress Tracker
 
 ## Current Status: IN PROGRESS
-## Current Session: 1.3 (completed) → ready for 2.2
+## Current Session: 2.2 (completed) → ready for 2.3
 
 ---
 
@@ -12,7 +12,7 @@
 
 ## Day 2: Calibration & First Movements
 - [x] Session 2.1: Install LeRobot & Dependencies (pulled forward to 1.1)
-- [ ] Session 2.2: Connect to Motors, Test & Calibrate Both Arms
+- [x] Session 2.2: Connect to Motors, Test & Calibrate Both Arms
 - [ ] Session 2.3: First Teleoperation on Mac
 
 ## Day 3: Jetson Setup & Camera
@@ -81,3 +81,21 @@
 - Cable routing: daisy chain means a break kills all downstream motors, SO-ARM101 cable clips prevent snagging
 
 **Handout:** `docs/handouts/session_1_3_arm_assembly.md`
+
+### Session 2.2 — 2026-03-10
+**TEACH:**
+- Why calibration matters: raw encoder values differ per motor due to assembly variance
+- Two-step calibration: homing offset (midpoint) + range of motion recording
+- Calibration creates a shared coordinate system so leader and follower speak the same language
+- Calibration files saved as JSON, tied to arm ID — must use consistent IDs across all commands
+- Standardized values enable AI policy transfer between robots
+
+**DO:**
+- Verified ports unchanged: follower=/dev/tty.usbmodem5AAF2626601, leader=/dev/tty.usbmodem5AAF2625931
+- Calibrated follower arm (id=follower) — saved successfully
+- Calibrated leader arm (id=leader) — first attempt failed with negative range_min on elbow_flex (-153 ValueError), resolved by repositioning elbow midpoint
+- Hit ConnectionError on follower motor 5 (wrist_roll) during re-calibration — resolved by reseating cable
+- Ran first teleoperation — follower mirrors leader smoothly on all joints
+- AVFFrameReceiver duplicate class warnings noted as harmless (OpenCV + PyAV bundling same FFmpeg lib)
+
+**Handout:** `docs/handouts/session_2_2_calibration.md`
