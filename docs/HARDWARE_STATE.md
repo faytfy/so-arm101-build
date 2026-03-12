@@ -72,5 +72,11 @@
 - FFmpeg: 7.1.1
 - LeRobot: 0.5.1 (source install at ~/lerobot)
 
+## Cameras
+- Lenovo 500 FHD → OpenCV index 0 (Mac) → assigned as `top` (overhead view)
+- Logitech VU0029 → OpenCV index 1 (Mac) → assigned as `front` (workspace-facing view)
+- Resolution: 640x480 @ 30fps
+- Note: Mac camera indices can change after reboot — will use stable /dev/video paths on Jetson
+
 ## Known Issues
 (Log any hardware problems here)

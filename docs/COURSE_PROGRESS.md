@@ -1,7 +1,7 @@
 # Course Progress Tracker
 
 ## Current Status: IN PROGRESS
-## Current Session: 3.2
+## Current Session: 3.3
 
 ---
 
@@ -17,7 +17,7 @@
 
 ## Day 3: Jetson Setup & Camera
 - [x] Session 3.1: Jetson AGX Orin Environment Setup
-- [ ] Session 3.2: Camera Setup & Recording Test
+- [x] Session 3.2: Camera Setup & Recording Test
 - [ ] Session 3.3: Transfer Arms to Jetson & Verify Full Pipeline
 
 ## Day 4: Data Collection & Policy Training
@@ -116,3 +116,21 @@
 - Verified full stack: CUDA available, GPU = "Orin"
 
 **Handout:** `docs/handouts/session_3_1_jetson_setup.md`
+
+### Session 3.2 — 2026-03-12
+**TEACH:**
+- Why cameras matter: joint angles alone lack visual context — policy needs to *see* the environment
+- Camera frames are observation features: recorded alongside joints, used for training, fed live during inference
+- Camera naming must be consistent between recording and inference
+- Placement: two cameras (front + top) is the sweet spot, must be fixed in place
+- Resolution: 640x480 @ 30fps is standard — higher resolution wastes compute, gets downscaled anyway
+
+**DO:**
+- Detected 4 cameras via `lerobot-find-cameras opencv` — indices 0-3
+- Identified: index 0 = Lenovo 500 FHD (top), index 1 = Logitech VU0029 (front), index 2 = MacBook FaceTime, index 3 = blank/virtual
+- Tested both cameras with teleoperation — feeds visible in rerun, teleoperation smooth
+- Completed 2-episode test recording (`fay/test-recording`, task: "Pick up object")
+- 1800 frames per episode (60s × 30fps), both camera streams encoded as AV1
+- Dataset saved to `~/.cache/huggingface/lerobot/fay/test-recording`
+
+**Handout:** `docs/handouts/session_3_2_camera_setup.md`
