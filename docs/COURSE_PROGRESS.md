@@ -1,7 +1,7 @@
 # Course Progress Tracker
 
 ## Current Status: IN PROGRESS
-## Current Session: 2.2 (completed) → ready for 2.3
+## Current Session: 3.2
 
 ---
 
@@ -13,10 +13,10 @@
 ## Day 2: Calibration & First Movements
 - [x] Session 2.1: Install LeRobot & Dependencies (pulled forward to 1.1)
 - [x] Session 2.2: Connect to Motors, Test & Calibrate Both Arms
-- [ ] Session 2.3: First Teleoperation on Mac
+- [x] Session 2.3: First Teleoperation on Mac (merged into 2.2 — teleoperation verified there)
 
 ## Day 3: Jetson Setup & Camera
-- [ ] Session 3.1: Jetson AGX Orin Environment Setup
+- [x] Session 3.1: Jetson AGX Orin Environment Setup
 - [ ] Session 3.2: Camera Setup & Recording Test
 - [ ] Session 3.3: Transfer Arms to Jetson & Verify Full Pipeline
 
@@ -99,3 +99,20 @@
 - AVFFrameReceiver duplicate class warnings noted as harmless (OpenCV + PyAV bundling same FFmpeg lib)
 
 **Handout:** `docs/handouts/session_2_2_calibration.md`
+
+### Session 3.1 — 2026-03-11
+**TEACH:**
+- Why we move from Mac to Jetson: CUDA GPU for training, USB latency for real-time control, unified pipeline
+- Mac MPS vs NVIDIA CUDA: MPS is incomplete/buggy for robotics ML, CUDA is the standard
+- Jetson architecture: ARM + NVIDIA GPU, 64GB unified memory (CPU+GPU share RAM pool), JetPack = batteries-included Linux
+- Unified memory tradeoff: bigger models fit (64GB shared) but slower bandwidth than dedicated VRAM
+
+**DO:**
+- Found Jetson IP (192.168.5.190), set up SSH key auth from Mac
+- Installed miniforge, created `lerobot` conda env with Python 3.12.13
+- Installed PyTorch 2.10.0+cu126 — discovery: official PyTorch CUDA wheels now work on Jetson aarch64 (no NVIDIA-specific wheels needed)
+- Installed FFmpeg 7.1.1 via conda
+- Installed LeRobot 0.5.1 from source with Feetech support
+- Verified full stack: CUDA available, GPU = "Orin"
+
+**Handout:** `docs/handouts/session_3_1_jetson_setup.md`

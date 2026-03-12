@@ -61,5 +61,16 @@
 - Leader: CALIBRATED (id=leader, saved to ~/.cache/huggingface/lerobot/calibration/teleoperators/so_leader/leader.json)
 - Teleoperation: VERIFIED — follower mirrors leader smoothly on all joints
 
+## Jetson AGX Orin
+- IP: 192.168.5.190 (SSH as fay@, key auth configured)
+- Hostname: fay-desktop
+- JetPack: 6.2.2 / CUDA 12.6
+- RAM: 64GB unified
+- Disk: 915GB NVMe (839GB free)
+- Conda env: lerobot (Python 3.12.13)
+- PyTorch: 2.10.0+cu126 (GPU = "Orin")
+- FFmpeg: 7.1.1
+- LeRobot: 0.5.1 (source install at ~/lerobot)
+
 ## Known Issues
 (Log any hardware problems here)

@@ -57,7 +57,7 @@ When you need up-to-date API docs or troubleshooting info:
 - Mac MPS training is broken for real robot data (PyTorch bug) — train on Jetson or PC only
 - LeRobot robot types: `so101_follower` and `so101_leader` (NOT so100)
 - Installing lerobot via pip can silently replace GPU PyTorch with CPU — always verify after install
-- On Jetson: install PyTorch via NVIDIA's Jetson-specific method, NOT generic PyTorch docs
+- On Jetson (JetPack 6.2+): PyTorch official CUDA wheels work — `pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126` (no NVIDIA-specific wheels needed)
 - Linux USB permissions: `sudo chmod 666 /dev/ttyACM*` needed on Jetson/PC
 
 **Calibration & Teleoperation:**
