@@ -1,7 +1,7 @@
 # Course Progress Tracker
 
 ## Current Status: IN PROGRESS
-## Current Session: 3.3
+## Current Session: 4.1
 
 ---
 
@@ -18,7 +18,7 @@
 ## Day 3: Jetson Setup & Camera
 - [x] Session 3.1: Jetson AGX Orin Environment Setup
 - [x] Session 3.2: Camera Setup & Recording Test
-- [ ] Session 3.3: Transfer Arms to Jetson & Verify Full Pipeline
+- [x] Session 3.3: Transfer Arms to Jetson & Verify Full Pipeline
 
 ## Day 4: Data Collection & Policy Training
 - [ ] Session 4.1: Understanding AI Policies & Data Collection
@@ -134,3 +134,21 @@
 - Dataset saved to `~/.cache/huggingface/lerobot/fay/test-recording`
 
 **Handout:** `docs/handouts/session_3_2_camera_setup.md`
+
+### Session 3.3 — 2026-03-12
+**TEACH:**
+- Why move to Jetson: CUDA for training, lower USB latency, single-machine pipeline
+- What changes (USB port names, camera indices, permissions) vs what stays the same (commands, motor IDs, wiring)
+
+**DO:**
+- Physically transferred both arms and cameras from Mac to Jetson
+- USB detection: follower=/dev/ttyACM0, leader=/dev/ttyACM1
+- Set Linux USB permissions (`sudo chmod 666 /dev/ttyACM*`)
+- Calibrated both arms on Jetson (follower id=follower, leader id=leader)
+- Camera discovery: /dev/video0 = Logitech (front), /dev/video2 = Lenovo (top), /dev/video4 = dead device
+- Teleoperation verified on Jetson — follower mirrors leader
+- Test recording completed: 1 episode, 30s, both cameras, AV1 encoding, dataset saved to `~/.cache/huggingface/lerobot/fay/jetson-test`
+- Headless mode (SSH) — no display preview, but recording works fine
+- Gripper motor overload error on disconnect — harmless
+
+**Handout:** `docs/handouts/session_3_3_jetson_transfer.md`

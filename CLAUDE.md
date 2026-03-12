@@ -56,6 +56,8 @@ When you need up-to-date API docs or troubleshooting info:
 - **FFmpeg 7.x required** — ffmpeg 8.x is NOT supported
 - Mac MPS training is broken for real robot data (PyTorch bug) — train on Jetson or PC only
 - LeRobot robot types: `so101_follower` and `so101_leader` (NOT so100)
+- LeRobot CLI commands use `lerobot-*` format (e.g., `lerobot-calibrate`, `lerobot-teleoperate`, `lerobot-record`) — NOT `python -m lerobot.*`
+- Cameras are configured via `--robot.cameras` YAML string, NOT top-level `--cameras.*` args
 - Installing lerobot via pip can silently replace GPU PyTorch with CPU — always verify after install
 - On Jetson (JetPack 6.2+): PyTorch official CUDA wheels work — `pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126` (no NVIDIA-specific wheels needed)
 - Linux USB permissions: `sudo chmod 666 /dev/ttyACM*` needed on Jetson/PC

@@ -52,17 +52,23 @@
 | 5 | Wrist Roll | 1/147 | C046 |
 | 6 | Gripper | 1/147 | C046 |
 
-### Board ports (Mac)
+### Board ports
+**Mac:**
 - Follower: /dev/tty.usbmodem5AAF2626601
 - Leader: /dev/tty.usbmodem5AAF2625931
 
+**Jetson:**
+- Follower: /dev/ttyACM0
+- Leader: /dev/ttyACM1
+- Note: `sudo chmod 666 /dev/ttyACM*` needed after each reboot/reconnect
+
 ## Calibration Status
-- Follower: CALIBRATED (id=follower, saved to ~/.cache/huggingface/lerobot/calibration/robots/so_follower/follower.json)
-- Leader: CALIBRATED (id=leader, saved to ~/.cache/huggingface/lerobot/calibration/teleoperators/so_leader/leader.json)
-- Teleoperation: VERIFIED — follower mirrors leader smoothly on all joints
+- Follower: CALIBRATED on both Mac and Jetson (id=follower)
+- Leader: CALIBRATED on both Mac and Jetson (id=leader)
+- Teleoperation: VERIFIED on both Mac and Jetson
 
 ## Jetson AGX Orin
-- IP: 192.168.5.190 (SSH as fay@, key auth configured)
+- IP: 192.168.5.196 (SSH as fay@, key auth configured)
 - Hostname: fay-desktop
 - JetPack: 6.2.2 / CUDA 12.6
 - RAM: 64GB unified
@@ -73,10 +79,14 @@
 - LeRobot: 0.5.1 (source install at ~/lerobot)
 
 ## Cameras
-- Lenovo 500 FHD → OpenCV index 0 (Mac) → assigned as `top` (overhead view)
-- Logitech VU0029 → OpenCV index 1 (Mac) → assigned as `front` (workspace-facing view)
+- Lenovo 500 FHD → assigned as `top` (overhead view)
+  - Mac: OpenCV index 0
+  - Jetson: /dev/video2
+- Logitech VU0029 → assigned as `front` (workspace-facing view)
+  - Mac: OpenCV index 1
+  - Jetson: /dev/video0
 - Resolution: 640x480 @ 30fps
-- Note: Mac camera indices can change after reboot — will use stable /dev/video paths on Jetson
 
 ## Known Issues
-(Log any hardware problems here)
+- Gripper motor (ID 6) throws "Overload error" on disconnect — harmless, recording completes fine
+- Headless mode on Jetson (SSH) — no camera preview, but recording works normally
