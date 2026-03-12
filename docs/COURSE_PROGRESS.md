@@ -1,7 +1,7 @@
 # Course Progress Tracker
 
 ## Current Status: IN PROGRESS
-## Current Session: 4.1
+## Current Session: 4.2
 
 ---
 
@@ -21,7 +21,7 @@
 - [x] Session 3.3: Transfer Arms to Jetson & Verify Full Pipeline
 
 ## Day 4: Data Collection & Policy Training
-- [ ] Session 4.1: Understanding AI Policies & Data Collection
+- [x] Session 4.1: Understanding AI Policies & Data Collection
 - [ ] Session 4.2: Record Demonstration Episodes
 - [ ] Session 4.3: Train Your First Policy (ACT) on Jetson or PC
 
@@ -152,3 +152,19 @@
 - Gripper motor overload error on disconnect — harmless
 
 **Handout:** `docs/handouts/session_3_3_jetson_transfer.md`
+
+### Session 4.1 — 2026-03-12
+**TEACH:**
+- What a policy is: neural network mapping observations (joint angles + camera frames) → actions (target joint angles), runs at ~30Hz
+- Learned policies vs hard-coded rules: pattern matching generalizes, explicit rules are brittle
+- Imitation learning: policy learns by watching expert demonstrations — paired observation/action data
+- ACT architecture: action chunking (predict ~100 future actions at once) for smooth motion, Transformer-based, VAE for handling ambiguity
+- Data quality: consistency is king — same strategy, smooth motion, delete bad episodes, 50+ episodes minimum
+
+**DO:**
+- Chose first task: pick up baby shark, place in green cup
+- Set up workspace: blue tape start zone for shark, green cup taped down
+- Practice teleoperation runs — consistent strategy confirmed, ~5s per pick-and-place
+- Episode length set to 15s (with rest/hold padding)
+
+**Handout:** `docs/handouts/session_4_1_policies_and_data.md`
