@@ -68,15 +68,27 @@
 - Teleoperation: VERIFIED on both Mac and Jetson
 
 ## Jetson AGX Orin
-- IP: 192.168.5.196 (SSH as fay@, key auth configured)
+- IP: 192.168.5.197 (SSH as fay@, key auth configured) — changed from .196 after reboot on 2026-03-13
 - Hostname: fay-desktop
 - JetPack: 6.2.2 / CUDA 12.6
 - RAM: 64GB unified
 - Disk: 915GB NVMe (839GB free)
 - Conda env: lerobot (Python 3.12.13)
-- PyTorch: 2.10.0+cu126 (GPU = "Orin")
+- PyTorch: 2.6.0 (built from source with TORCH_CUDA_ARCH_LIST=8.7 for sm_87 Orin support)
+- torchvision: 0.21.0 (built from source)
 - FFmpeg: 7.1.1
 - LeRobot: 0.5.1 (source install at ~/lerobot)
+
+## PC (Training Machine)
+- IP: 192.168.5.192 (SSH as fay@, key auth configured)
+- OS: Ubuntu
+- GPU: NVIDIA RTX 5060 Ti (Blackwell, sm_120)
+- Conda env: lerobot (Python 3.12)
+- PyTorch: 2.7.0+cu128 (pre-built wheels, sm_120 support)
+- FFmpeg: 7.1.1
+- LeRobot: 0.5.1 (source install at ~/lerobot)
+- Training speed: ~5.4 steps/sec (~6x faster than Jetson)
+- Note: torchcodec incompatible with PyTorch 2.7 — use `--dataset.video_backend=pyav`
 
 ## Cameras
 - Lenovo 500 FHD → assigned as `top` (overhead view)

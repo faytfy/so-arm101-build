@@ -1,7 +1,7 @@
 # Course Progress Tracker
 
-## Current Status: IN PROGRESS
-## Current Session: 4.2
+## Current Status: SESSION 5.1 COMPLETE
+## Current Session: 5.2 (next)
 
 ---
 
@@ -23,10 +23,10 @@
 ## Day 4: Data Collection & Policy Training
 - [x] Session 4.1: Understanding AI Policies & Data Collection
 - [x] Session 4.2: Record Demonstration Episodes
-- [ ] Session 4.3: Train Your First Policy (ACT) on Jetson or PC
+- [x] Session 4.3: Train Your First Policy (ACT) on Jetson or PC
 
 ## Day 5: Deployment & Next Steps
-- [ ] Session 5.1: Run Trained Policy on the Arm
+- [x] Session 5.1: Run Trained Policy on the Arm
 - [ ] Session 5.2: Iterate, Debug & Improve
 - [ ] Session 5.3: Advanced Topics (Diffusion Policy, VLA Models, PC Training)
 
@@ -178,7 +178,7 @@
 - Push to hub failed (not logged in) — data is safe locally
 - Corrected CLI args: `--dataset.single_task` (not `--dataset.task`), `index_or_path` (not `index`)
 
-### Session 4.3 — 2026-03-12 (IN PROGRESS)
+### Session 4.3 — 2026-03-12 to 2026-03-13 (COMPLETE)
 **TEACH:**
 - Training loop: batch → predict → compare (loss) → adjust weights → repeat
 - Loss should decrease then plateau = model learned what it can
@@ -187,18 +187,64 @@
 - Building PyTorch from source with TORCH_CUDA_ARCH_LIST=8.7
 - Top 3 Jetson pain points: framework compatibility, unified memory management, camera latency
 
-**DO (in progress):**
-- Training attempt #1 failed: `CUDA error: no kernel image is available for execution on the device`
+**DO:**
+- Training attempt #1 on Jetson failed: `CUDA error: no kernel image is available for execution on the device`
 - Root cause: PyTorch 2.10.0+cu126 wheels only include sm_80 and sm_90, Orin needs sm_87
-- Building PyTorch v2.6.0 from source with TORCH_CUDA_ARCH_LIST=8.7 in tmux session `build` on Jetson
-- Build fixes applied: added CUDACXX path, CMAKE_POLICY_VERSION_MINIMUM=3.5
-- Build progress: ~45% (2679/5941 steps) as of last check, compiling CUDA kernels
-- Build log: `/tmp/pytorch_build4.log` on Jetson
-- **NEXT STEPS when build completes:**
-  1. Find wheel in `/tmp/pytorch/dist/`
-  2. `pip install /tmp/pytorch/dist/torch-*.whl`
-  3. Verify: `python3 -c "import torch; x = torch.randn(2,2).cuda(); print(x @ x); print('GPU works!')"`
-  4. Also install torchvision from source (needs matching torch)
-  5. Re-run training: `lerobot-train --dataset.repo_id=fay/shark-to-cup --dataset.root=/home/fay/.cache/huggingface/lerobot/fay/shark-to-cup --policy.type=act --output_dir=outputs/train/act_shark_to_cup --job_name=act_shark_to_cup --policy.device=cuda --policy.push_to_hub=false`
+- Built PyTorch v2.6.0 from source with TORCH_CUDA_ARCH_LIST=8.7 on Jetson (5941/5941 steps)
+- Built and installed torchvision 0.21.0 from source on Jetson
+- Jetson training started but stopped at step ~7,946 — moved to PC for 6x faster training
+- **PC training setup (RTX 5060 Ti, 192.168.5.192):**
+  - Installed miniforge, conda env `lerobot` with Python 3.12
+  - PyTorch 2.7.0+cu128 pre-built wheels (sm_120 Blackwell support, no source build needed)
+  - torchcodec incompatible with PyTorch 2.7 — used `--dataset.video_backend=pyav` workaround
+  - Dataset copied from Jetson via scp (596MB)
+- **Training completed on PC:**
+  - Command: `lerobot-train --dataset.repo_id=fay/shark-to-cup --dataset.root=... --policy.type=act --output_dir=outputs/train/act_shark_to_cup --policy.device=cuda --policy.push_to_hub=false --dataset.video_backend=pyav`
+  - Config: 100k steps, batch_size=8, 52M params, 50 episodes (44,900 frames)
+  - Speed: ~5.4 steps/sec (~0.18s/step), 6x faster than Jetson
+  - Started: 2026-03-12 23:01 → Completed: 2026-03-13 04:10 (5h 8m 45s)
+  - **Final loss: 0.045** (down from 6.614 — 99.3% reduction)
+  - 5 checkpoints saved: 20K, 40K, 60K, 80K, 100K at `/home/fay/outputs/train/act_shark_to_cup/checkpoints/`
+  - Full loss log: `logs/act_training_loss.csv` (500 data points)
+  - Training summary: `logs/act_training_summary.md`
+- Bonus TEACH: Edge AI landscape, ACT training dynamics, SM architecture versions
+- Identified data diversity issue: shark placed in nearly same position for all 50 demos
+- Created evaluation plan: `docs/evaluation_plan.md`
+- Day 5 session guides written (5.1, 5.2, 5.3)
 
-**Handout:** `docs/handouts/bonus_edge_ai_build_process.md`
+**Handouts:**
+- `docs/handouts/bonus_edge_ai_build_process.md`
+- `docs/handouts/bonus_edge_ai_landscape.md`
+- `docs/handouts/bonus_pc_training_setup.md`
+
+**NEXT:** Copy checkpoint from PC to Jetson → Session 5.1 (run inference on robot)
+
+### Session 5.1 — 2026-03-13 (COMPLETE)
+**TEACH:**
+- Inference loop: policy runs at ~30Hz, reads joints + cameras → predicts action chunk → sends motor commands
+- Action chunking at inference: predict 100 steps, execute few, re-predict for smooth course-correcting motion
+- Temporal ensembling: overlapping chunks blended for smoother trajectories
+- Environment must match training: same camera positions, lighting, workspace layout
+- Leader arm stays connected (LeRobot expects full config) but isn't used during inference
+
+**DO:**
+- Jetson IP changed to 192.168.5.197 (was .196) after reboot — found via mDNS (`fay-desktop.local`)
+- Copied 100K checkpoint from PC (192.168.5.192) to Jetson via scp (198MB, 7 files)
+- First inference run: custom script (`run_inference.py`) based on LeRobot ACT tutorial example
+  - SO101Follower + 2 cameras (top/front) + ACT policy on CUDA
+  - 5 episodes, 20s each, Press-Enter-to-start between episodes
+  - All 5 episodes ran successfully, gripper overload error on disconnect (harmless)
+- `lerobot-record --policy.path` attempted for proper eval recording but:
+  - Dataset name must start with `eval_` when policy is provided
+  - Reset phase hangs indefinitely in headless SSH mode (no keyboard input to advance)
+  - Abandoned in favor of custom script approach
+- Updated `run_inference.py` to record camera feeds (top/front/combined MP4 per episode)
+  - Camera obs keys are `top`/`front` (not `observation.images.top`)
+- **Evaluation results (100K checkpoint, 5 episodes):**
+  - Overall success: **4/5 = 80%**
+  - Reach: 5/5 (100%), Grasp: 5/5 (100%), Transport: 4/5 (80%), Place: 4/5 (80%)
+  - 1 failure: Episode 3 — grasped shark but dropped during transport (DROP_LIFT)
+  - Motion smooth and purposeful, consistent timing across episodes
+- Recordings saved: `eval_recordings/` on Jetson and Mac (`eval_recordings/frames/` for analysis)
+
+**NEXT:** Session 5.2 — Iterate, debug & improve
