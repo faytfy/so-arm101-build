@@ -10,7 +10,7 @@ https://github.com/faytfy/so-arm101-build/releases/download/v1.0/autonomous_pick
 
 ## What This Is
 
-I'm not a robotics engineer. I work in developer experience and wanted to physics AI. I prompted Claude to design a structured course tailored to my level, and this repo is the result — every session guide, handout, troubleshooting log, and evaluation result from the 5-day build.
+I'm not a robotics engineer. I work in developer experience and wanted to learn physics AI. I prompted Claude to design a structured course tailored to my level, and this repo is the result — every session guide, handout, troubleshooting log, and evaluation result from the 5-day build.
 
 **The prompt that started it all:**
 
