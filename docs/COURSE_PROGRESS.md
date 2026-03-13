@@ -22,7 +22,7 @@
 
 ## Day 4: Data Collection & Policy Training
 - [x] Session 4.1: Understanding AI Policies & Data Collection
-- [ ] Session 4.2: Record Demonstration Episodes
+- [x] Session 4.2: Record Demonstration Episodes
 - [ ] Session 4.3: Train Your First Policy (ACT) on Jetson or PC
 
 ## Day 5: Deployment & Next Steps
@@ -168,3 +168,37 @@
 - Episode length set to 15s (with rest/hold padding)
 
 **Handout:** `docs/handouts/session_4_1_policies_and_data.md`
+
+### Session 4.2 — 2026-03-12
+**DO:**
+- Recorded 50 episodes of "Pick up the baby shark and place it in the green cup"
+- Dataset: `fay/shark-to-cup` saved at `~/.cache/huggingface/lerobot/fay/shark-to-cup` on Jetson
+- Episode length: 30s, reset time: 10s
+- Camera config: top (index_or_path=2), front (index_or_path=0), 640x480@30fps
+- Push to hub failed (not logged in) — data is safe locally
+- Corrected CLI args: `--dataset.single_task` (not `--dataset.task`), `index_or_path` (not `index`)
+
+### Session 4.3 — 2026-03-12 (IN PROGRESS)
+**TEACH:**
+- Training loop: batch → predict → compare (loss) → adjust weights → repeat
+- Loss should decrease then plateau = model learned what it can
+- ACT hyperparameters: batch_size=8, 100k steps, chunk_size=100
+- Edge AI build problem: standard PyTorch wheels lack sm_87 kernels for Jetson Orin
+- Building PyTorch from source with TORCH_CUDA_ARCH_LIST=8.7
+- Top 3 Jetson pain points: framework compatibility, unified memory management, camera latency
+
+**DO (in progress):**
+- Training attempt #1 failed: `CUDA error: no kernel image is available for execution on the device`
+- Root cause: PyTorch 2.10.0+cu126 wheels only include sm_80 and sm_90, Orin needs sm_87
+- Building PyTorch v2.6.0 from source with TORCH_CUDA_ARCH_LIST=8.7 in tmux session `build` on Jetson
+- Build fixes applied: added CUDACXX path, CMAKE_POLICY_VERSION_MINIMUM=3.5
+- Build progress: ~45% (2679/5941 steps) as of last check, compiling CUDA kernels
+- Build log: `/tmp/pytorch_build4.log` on Jetson
+- **NEXT STEPS when build completes:**
+  1. Find wheel in `/tmp/pytorch/dist/`
+  2. `pip install /tmp/pytorch/dist/torch-*.whl`
+  3. Verify: `python3 -c "import torch; x = torch.randn(2,2).cuda(); print(x @ x); print('GPU works!')"`
+  4. Also install torchvision from source (needs matching torch)
+  5. Re-run training: `lerobot-train --dataset.repo_id=fay/shark-to-cup --dataset.root=/home/fay/.cache/huggingface/lerobot/fay/shark-to-cup --policy.type=act --output_dir=outputs/train/act_shark_to_cup --job_name=act_shark_to_cup --policy.device=cuda --policy.push_to_hub=false`
+
+**Handout:** `docs/handouts/bonus_edge_ai_build_process.md`

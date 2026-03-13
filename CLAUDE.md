@@ -58,8 +58,12 @@ When you need up-to-date API docs or troubleshooting info:
 - LeRobot robot types: `so101_follower` and `so101_leader` (NOT so100)
 - LeRobot CLI commands use `lerobot-*` format (e.g., `lerobot-calibrate`, `lerobot-teleoperate`, `lerobot-record`) — NOT `python -m lerobot.*`
 - Cameras are configured via `--robot.cameras` YAML string, NOT top-level `--cameras.*` args
+- OpenCVCameraConfig uses `index_or_path` (NOT `index`) for camera selection
+- Recording task description: use `--dataset.single_task` (NOT `--dataset.task`)
 - Installing lerobot via pip can silently replace GPU PyTorch with CPU — always verify after install
-- On Jetson (JetPack 6.2+): PyTorch official CUDA wheels work — `pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126` (no NVIDIA-specific wheels needed)
+- On Jetson (JetPack 6.2+): Standard PyTorch wheels do NOT work for GPU training — they lack sm_87 kernels. Must build PyTorch from source with `TORCH_CUDA_ARCH_LIST=8.7`. See COURSE_PROGRESS.md Session 4.3 for details.
+- Jetson PyTorch build requires: `CUDA_HOME=/usr/local/cuda CUDACXX=/usr/local/cuda/bin/nvcc PATH=/usr/local/cuda/bin:$PATH TORCH_CUDA_ARCH_LIST=8.7 CMAKE_POLICY_VERSION_MINIMUM=3.5 USE_NCCL=0 USE_DISTRIBUTED=0`
+- Training command uses `--policy.push_to_hub=false` to skip HuggingFace upload (not `--training.push_to_hub`)
 - Linux USB permissions: `sudo chmod 666 /dev/ttyACM*` needed on Jetson/PC
 
 **Calibration & Teleoperation:**
