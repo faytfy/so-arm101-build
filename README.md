@@ -4,7 +4,7 @@ A 5-day hands-on course in robotics AI — from a box of servo motors to autonom
 
 ## The Result
 
-https://github.com/user-attachments/assets/537ea913-1e4d-4fcf-bba6-1ae52a77580b
+
 
 **80% success rate** on autonomous evaluation runs. The robot picks up a toy shark and places it in a green cup — no human control, just a trained neural network reading cameras and sending motor commands at 30Hz.
 
