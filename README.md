@@ -6,11 +6,11 @@ A 5-day hands-on course in robotics AI — from a box of servo motors to autonom
 
 https://github.com/faytfy/so-arm101-build/releases/download/v1.0/autonomous_pick_and_place.mp4
 
-80% success rate on autonomous evaluation runs. The robot picks up a toy shark and places it in a green cup — no human control, just a trained neural network reading cameras and sending motor commands at 30Hz.
+80% success rate on autonomous evaluation runs. The robot picks up a grandpa shark and places it in a green cup. No human control, just a trained neural network reading cameras and sending motor commands at 30Hz.
 
 ## What This Is
 
-I'm not a robotics engineer. I work in developer experience and wanted to understand what AI-assisted learning feels like from the inside. I prompted Claude to design a structured course tailored to my level, and this repo is the result — every session guide, handout, troubleshooting log, and evaluation result from the 5-day build.
+I'm not a robotics engineer. I work in developer experience and wanted to physics AI. I prompted Claude to design a structured course tailored to my level, and this repo is the result — every session guide, handout, troubleshooting log, and evaluation result from the 5-day build.
 
 **The prompt that started it all:**
 
