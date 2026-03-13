@@ -68,7 +68,7 @@ When you need up-to-date API docs or troubleshooting info:
 - Robot observation keys are raw (`top`, `front`, `shoulder_pan.pos`) NOT prefixed (`observation.images.top`)
 - `lerobot-record` with `--policy.path` requires dataset name starting with `eval_`
 - `lerobot-record` reset phase hangs in headless SSH mode — use custom inference script instead
-- Jetson IP may change after reboot (DHCP) — use `ping fay-desktop.local` to find it
+- Jetson IP may change after reboot (DHCP) — use `ping <jetson-hostname>.local` to find it
 - On PC (RTX 5060 Ti): Use PyTorch 2.7.0+cu128 (pre-built wheels support sm_120 Blackwell). No source build needed.
 - On PC: torchcodec is incompatible with PyTorch 2.7 — must add `--dataset.video_backend=pyav` to training command
 - PC training is ~6x faster than Jetson (0.18s/step vs 1.14s/step). Always train on PC, use Jetson for inference only.

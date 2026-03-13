@@ -52,7 +52,7 @@ python3 -c "import torch; print(torch.cuda.is_available(), torch.cuda.get_device
 ```bash
 lerobot-train \
   --dataset.repo_id=fay/shark-to-cup \
-  --dataset.root=/home/fay/.cache/huggingface/lerobot/fay/shark-to-cup \
+  --dataset.root=$HOME/.cache/huggingface/lerobot/fay/shark-to-cup \
   --policy.type=act \
   --output_dir=outputs/train/act_shark_to_cup \
   --job_name=act_shark_to_cup \

@@ -28,7 +28,7 @@ from lerobot.robots.so_follower import SO101Follower, SO101FollowerConfig
 CHECKPOINT = sys.argv[1] if len(sys.argv) > 1 else "last"
 PRETRAINED_PATH = f"outputs/train/act_shark_to_cup/checkpoints/{CHECKPOINT}/pretrained_model"
 DATASET_ID = "fay/shark-to-cup"
-DATASET_ROOT = "/home/fay/.cache/huggingface/lerobot/fay/shark-to-cup"
+DATASET_ROOT = str(Path.home() / ".cache/huggingface/lerobot/fay/shark-to-cup")
 DEVICE = torch.device("cuda")
 
 # Robot hardware

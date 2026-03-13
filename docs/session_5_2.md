@@ -47,7 +47,7 @@ lerobot-record \
   --robot.cameras='[{type: opencv, key: top, index_or_path: 2, width: 640, height: 480, fps: 30}, {type: opencv, key: front, index_or_path: 0, width: 640, height: 480, fps: 30}]' \
   --teleop.type=so101_leader \
   --dataset.repo_id=fay/shark-to-cup \
-  --dataset.root=/home/fay/.cache/huggingface/lerobot/fay/shark-to-cup \
+  --dataset.root=$HOME/.cache/huggingface/lerobot/fay/shark-to-cup \
   --dataset.single_task="Pick up the baby shark and place it in the green cup" \
   --dataset.num_episodes=20 \
   --dataset.fps=30 \
@@ -59,7 +59,7 @@ lerobot-record \
 ```bash
 lerobot-train \
   --dataset.repo_id=fay/shark-to-cup \
-  --dataset.root=/home/fay/.cache/huggingface/lerobot/fay/shark-to-cup \
+  --dataset.root=$HOME/.cache/huggingface/lerobot/fay/shark-to-cup \
   --policy.type=act \
   --output_dir=outputs/train/act_shark_to_cup_v2 \
   --job_name=act_shark_to_cup_v2 \

@@ -43,7 +43,7 @@ Explore what's beyond ACT — other policy types, faster training on the PC, and
 - Useful for longer training runs or larger models (Diffusion Policy)
 
 ### Workflow
-1. Copy dataset from Jetson to PC: `scp -r fay@192.168.5.196:~/.cache/huggingface/lerobot/fay/shark-to-cup ~/data/`
+1. Copy dataset from Jetson to PC: `scp -r <user>@<JETSON_IP>:~/.cache/huggingface/lerobot/fay/shark-to-cup ~/data/`
 2. Install LeRobot on PC (same conda setup as Jetson)
 3. Train on PC with `--policy.device=cuda`
 4. Copy trained checkpoint back to Jetson for inference

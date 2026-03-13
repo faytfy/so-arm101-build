@@ -26,7 +26,7 @@ Each issue gets an entry:
 
 ### Issue: FileExistsError when starting lerobot-record
 - Session: 3.2
-- Symptoms: `FileExistsError: [Errno 17] File exists: '/Users/fay/.cache/huggingface/lerobot/fay/test-recording'`
+- Symptoms: `FileExistsError: [Errno 17] File exists: '~/.cache/huggingface/lerobot/fay/test-recording'`
 - Root cause: A previous recording attempt (or aborted run) left a dataset directory behind
 - Fix: Either delete the old dataset (`rm -rf ~/.cache/huggingface/lerobot/fay/test-recording`) or add `--resume=true` to continue from where it left off
 

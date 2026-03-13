@@ -80,16 +80,16 @@ The RTX 5060 Ti is faster despite having less memory because:
 
 **The practical workflow:**
 1. Record demos on Jetson (arms + cameras connected)
-2. Copy dataset to PC: `scp -r fay@192.168.5.196:~/.cache/huggingface/lerobot/fay/shark-to-cup ~/.cache/huggingface/lerobot/fay/`
+2. Copy dataset to PC: `scp -r <user>@<JETSON_IP>:~/.cache/huggingface/lerobot/fay/shark-to-cup ~/.cache/huggingface/lerobot/fay/`
 3. Train on PC (fast)
-4. Copy checkpoint to Jetson: `scp -r outputs/train/act_shark_to_cup/checkpoints/last fay@192.168.5.196:~/outputs/train/act_shark_to_cup/checkpoints/`
+4. Copy checkpoint to Jetson: `scp -r outputs/train/act_shark_to_cup/checkpoints/last <user>@<JETSON_IP>:~/outputs/train/act_shark_to_cup/checkpoints/`
 5. Run inference on Jetson
 
 ---
 
 ## PC Setup Summary
 
-What we installed on the desktop PC (192.168.5.192):
+What we installed on the desktop PC (<PC_IP>):
 
 1. **openssh-server** — for remote access
 2. **miniforge** — conda package manager
@@ -107,10 +107,10 @@ What we installed on the desktop PC (192.168.5.192):
 conda activate lerobot
 lerobot-train \
   --dataset.repo_id=fay/shark-to-cup \
-  --dataset.root=/home/fay/.cache/huggingface/lerobot/fay/shark-to-cup \
+  --dataset.root=$HOME/.cache/huggingface/lerobot/fay/shark-to-cup \
   --dataset.video_backend=pyav \
   --policy.type=act \
-  --output_dir=/home/fay/outputs/train/act_shark_to_cup \
+  --output_dir=$HOME/outputs/train/act_shark_to_cup \
   --job_name=act_shark_to_cup \
   --policy.device=cuda \
   --policy.push_to_hub=false

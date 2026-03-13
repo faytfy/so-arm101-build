@@ -40,7 +40,7 @@ Think of it as: **Mac = workbench** (great for assembly/testing), **Jetson = pro
 
 ```bash
 # SSH in
-ssh fay@192.168.5.196
+ssh <user>@<JETSON_IP>
 
 # Activate environment
 conda activate lerobot

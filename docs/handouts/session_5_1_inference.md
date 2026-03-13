@@ -59,7 +59,7 @@ A: The arm would likely still reach toward the original position — the model d
 
 ### Jetson IP
 - Can change after reboot (DHCP)
-- Find via: `ping fay-desktop.local` (mDNS) or ARP table scan
+- Find via: `ping <jetson-hostname>.local` (mDNS) or ARP table scan
 
 ## Evaluation Results
 

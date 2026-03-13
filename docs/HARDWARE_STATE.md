@@ -68,8 +68,8 @@
 - Teleoperation: VERIFIED on both Mac and Jetson
 
 ## Jetson AGX Orin
-- IP: 192.168.5.197 (SSH as fay@, key auth configured) — changed from .196 after reboot on 2026-03-13
-- Hostname: fay-desktop
+- IP: <JETSON_IP> (SSH as <user>@, key auth configured) — IP may change after reboot (DHCP)
+- Hostname: <jetson-hostname>
 - JetPack: 6.2.2 / CUDA 12.6
 - RAM: 64GB unified
 - Disk: 915GB NVMe (839GB free)
@@ -80,7 +80,7 @@
 - LeRobot: 0.5.1 (source install at ~/lerobot)
 
 ## PC (Training Machine)
-- IP: 192.168.5.192 (SSH as fay@, key auth configured)
+- IP: <PC_IP> (SSH as <user>@, key auth configured)
 - OS: Ubuntu
 - GPU: NVIDIA RTX 5060 Ti (Blackwell, sm_120)
 - Conda env: lerobot (Python 3.12)

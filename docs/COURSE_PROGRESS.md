@@ -108,7 +108,7 @@
 - Unified memory tradeoff: bigger models fit (64GB shared) but slower bandwidth than dedicated VRAM
 
 **DO:**
-- Found Jetson IP (192.168.5.190), set up SSH key auth from Mac
+- Found Jetson IP (<JETSON_IP>), set up SSH key auth from Mac
 - Installed miniforge, created `lerobot` conda env with Python 3.12.13
 - Installed PyTorch 2.10.0+cu126 — discovery: official PyTorch CUDA wheels now work on Jetson aarch64 (no NVIDIA-specific wheels needed)
 - Installed FFmpeg 7.1.1 via conda
@@ -193,7 +193,7 @@
 - Built PyTorch v2.6.0 from source with TORCH_CUDA_ARCH_LIST=8.7 on Jetson (5941/5941 steps)
 - Built and installed torchvision 0.21.0 from source on Jetson
 - Jetson training started but stopped at step ~7,946 — moved to PC for 6x faster training
-- **PC training setup (RTX 5060 Ti, 192.168.5.192):**
+- **PC training setup (RTX 5060 Ti, <PC_IP>):**
   - Installed miniforge, conda env `lerobot` with Python 3.12
   - PyTorch 2.7.0+cu128 pre-built wheels (sm_120 Blackwell support, no source build needed)
   - torchcodec incompatible with PyTorch 2.7 — used `--dataset.video_backend=pyav` workaround
@@ -204,7 +204,7 @@
   - Speed: ~5.4 steps/sec (~0.18s/step), 6x faster than Jetson
   - Started: 2026-03-12 23:01 → Completed: 2026-03-13 04:10 (5h 8m 45s)
   - **Final loss: 0.045** (down from 6.614 — 99.3% reduction)
-  - 5 checkpoints saved: 20K, 40K, 60K, 80K, 100K at `/home/fay/outputs/train/act_shark_to_cup/checkpoints/`
+  - 5 checkpoints saved: 20K, 40K, 60K, 80K, 100K at `~/outputs/train/act_shark_to_cup/checkpoints/`
   - Full loss log: `logs/act_training_loss.csv` (500 data points)
   - Training summary: `logs/act_training_summary.md`
 - Bonus TEACH: Edge AI landscape, ACT training dynamics, SM architecture versions
@@ -228,8 +228,8 @@
 - Leader arm stays connected (LeRobot expects full config) but isn't used during inference
 
 **DO:**
-- Jetson IP changed to 192.168.5.197 (was .196) after reboot — found via mDNS (`fay-desktop.local`)
-- Copied 100K checkpoint from PC (192.168.5.192) to Jetson via scp (198MB, 7 files)
+- Jetson IP changed after reboot — found via mDNS (`<jetson-hostname>.local`)
+- Copied 100K checkpoint from PC (<PC_IP>) to Jetson via scp (198MB, 7 files)
 - First inference run: custom script (`run_inference.py`) based on LeRobot ACT tutorial example
   - SO101Follower + 2 cameras (top/front) + ACT policy on CUDA
   - 5 episodes, 20s each, Press-Enter-to-start between episodes

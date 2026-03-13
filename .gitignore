@@ -21,6 +21,12 @@ logs/
 .env
 *.env
 
+# Eval recordings (large video files)
+eval_recordings/
+
+# Claude Code local config
+.claude/
+
 # Temporary files
 *.tmp
 *~
